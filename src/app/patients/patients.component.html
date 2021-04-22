@@ -1,0 +1,27 @@
+<table class="table">
+    <tr>
+        <th>PatientenId</th>
+        <th>Name</th>
+        <th>Identifier</th>
+        <th></th>
+    </tr>
+    <tr *ngFor='let patient of patientArr$' (click)="selectPatient(patient)">
+        <td>{{patient.id}}</td>
+        <td>
+            <p *ngFor='let name$ of patient.name'>{{name$.text}}</p>
+        </td>
+        <td> 
+            <p *ngFor='let identifier of patient.identifier'>{{identifier.value}}</p>
+        </td>
+    </tr>
+</table>
+<button (click)="createPatient()" type="button" class="btn btn-success">Neuen Patienten analegen</button>
+<!-- Wird nur angezeigt, wenn selectedPatient gesetzt ist und auch eine id hat-->
+<div *ngIf="(selectedPatient?.id != null)">    
+    <!--Die Patienten Component, bekommt mit [id] die id vom ausgewählten Patienten aus der Liste
+    und liefert einen Event zurück, wenn der Patient editiert wurde-->
+    <app-patient
+    [id]="selectedPatient?.id"
+    (patientModified)="onPatientModified($event)"
+    ></app-patient>
+</div>
