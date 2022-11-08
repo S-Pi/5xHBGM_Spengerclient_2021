@@ -5,21 +5,21 @@ import {
   OnChanges,
   Output,
   EventEmitter,
-} from "@angular/core";
-import { DataserviceService } from "../dataservice.service";
-import { PatientModel, HumanName } from "../models/PatientModel";
+} from '@angular/core';
+import { DataserviceService } from '../dataservice.service';
+import { PatientModel, HumanName } from '../models/PatientModel';
 import {
   FormGroup,
   FormControl,
   FormArray,
   FormBuilder,
   Validators,
-} from "@angular/forms";
+} from '@angular/forms';
 
 @Component({
-  selector: "app-patient",
-  templateUrl: "./patient.component.html",
-  styleUrls: ["./patient.component.scss"],
+  selector: 'app-patient',
+  templateUrl: './patient.component.html',
+  styleUrls: ['./patient.component.scss'],
 })
 export class PatientComponent implements OnInit, OnChanges {
   //FormBuilder wird verwendet, um einfach Formulare für die Benutzereingabe zu bauen
@@ -32,7 +32,7 @@ export class PatientComponent implements OnInit, OnChanges {
 
   //Input parameter from patient list, which patient details should be displayed
   @Input()
-  id: string = "";
+  id: string = '';
 
   //Notify the parent View to refresh the list
   @Output()
@@ -48,7 +48,7 @@ export class PatientComponent implements OnInit, OnChanges {
     //this.getPatient();
   }
 
-  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+  ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
     this.getPatient();
   }
 
@@ -56,7 +56,7 @@ export class PatientComponent implements OnInit, OnChanges {
 
   //Methoden, um auf das namen Array zugreifen zu können
   get namesArray() {
-    return this.patientForm.get("name") as FormArray;
+    return this.patientForm.get('name') as FormArray;
   }
   set namesArray(namesArray: FormArray) {
     this.patientForm.controls.name = namesArray;
@@ -65,11 +65,11 @@ export class PatientComponent implements OnInit, OnChanges {
   //Die Formularstruktur erstellen
   createPatientForm() {
     this.patientForm = this.formBuilder.group({
-      active: [""],
-      gender: ["unknown"],
-      deceasedBoolean: [""],
-      deceasedDateTime: [""],
-      birthDate: [""],
+      active: [''],
+      gender: ['unknown'],
+      deceasedBoolean: [''],
+      deceasedDateTime: [''],
+      birthDate: [''],
       name: this.formBuilder.array([]),
     });
   }
@@ -78,14 +78,18 @@ export class PatientComponent implements OnInit, OnChanges {
   updatePatientForm() {
     this.patientForm.controls.active.setValue(this.patient.active);
     this.patientForm.controls.gender.setValue(this.patient.gender);
-    this.patientForm.controls.deceasedDateTime.setValue(this.patient.deceasedDateTime);
-    this.patientForm.controls.deceasedBoolean.setValue(this.patient.deceasedBoolean);
+    this.patientForm.controls.deceasedDateTime.setValue(
+      this.patient.deceasedDateTime
+    );
+    this.patientForm.controls.deceasedBoolean.setValue(
+      this.patient.deceasedBoolean
+    );
     this.patientForm.controls.birthDate.setValue(this.patient.birthDate);
 
     this.clearFormArray(this.namesArray);
-    
-    this.patient.name.forEach((name) => {
-      console.log("push name" + name.family);
+
+    this.patient.name.forEach(name => {
+      console.log('push name' + name.family);
       this.namesArray.push(
         this.formBuilder.group({
           id: [name.id],
@@ -102,21 +106,21 @@ export class PatientComponent implements OnInit, OnChanges {
   }
   createName(): FormGroup {
     return this.formBuilder.group({
-      id: [""],
-      use: ["official"],
-      text: [""],
-      family: [""],
+      id: [''],
+      use: ['official'],
+      text: [''],
+      family: [''],
     });
   }
 
   clearFormArray = (formArray: FormArray) => {
     while (formArray.length !== 0) {
-      formArray.removeAt(0)
+      formArray.removeAt(0);
     }
-  }
+  };
   //Formular wird abgeschickt
   onSubmitUpdate() {
-    console.log("Update from form data" + this.patientForm.value);
+    console.log('Update from form data' + this.patientForm.value);
     this.patient.active = this.patientForm.value.active;
     this.patient.gender = this.patientForm.value.gender;
     this.patient.birthDate = this.patientForm.value.birthDate;
@@ -139,13 +143,13 @@ export class PatientComponent implements OnInit, OnChanges {
   deletePatient() {
     this.service
       .deletePatient(this.patient.id)
-      .subscribe((x) => this.patientModified.emit(true));
+      .subscribe(x => this.patientModified.emit(true));
   }
 
   updatePatient() {
     var newPatient: PatientModel = this.patient;
-    this.service.updatePatient(newPatient).subscribe((patient) => {
-      console.log("Patient updated");
+    this.service.updatePatient(newPatient).subscribe(patient => {
+      console.log('Patient updated');
       this.patient = patient;
       this.patientModified.emit(false);
     });

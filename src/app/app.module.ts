@@ -6,26 +6,25 @@ import { AppComponent } from './app.component';
 import { PatientsComponent } from './patients/patients.component';
 import { PatientComponent } from './patient/patient.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { DataserviceService } from './dataservice.service'; 
-import { HttpClientModule } from '@angular/common/http'; 
+import { DataserviceService } from './dataservice.service';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 
 @NgModule({
   declarations: [
     AppComponent,
     PatientsComponent,
     PatientComponent,
-    SidebarComponent
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [DataserviceService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

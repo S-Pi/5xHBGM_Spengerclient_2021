@@ -27,30 +27,27 @@ export class DataserviceService {
       .pipe(catchError(this.handleError('getPatientDetail', null)));
   }
 
-  public deletePatient (id: string): Observable<{}> {    
-    return this.http.delete(patientUrl+id, httpOptions)
-      .pipe(
-        catchError(this.handleError('delete Patient'))
-      );
+  public deletePatient(id: string): Observable<{}> {
+    return this.http
+      .delete(patientUrl + id, httpOptions)
+      .pipe(catchError(this.handleError('delete Patient')));
   }
 
-  public addPatient (Patient: PatientModel): Observable<PatientModel> {
-    return this.http.post<PatientModel>(patientUrl, Patient, httpOptions)
-      .pipe(
-        catchError(this.handleError('addPatient', Patient))
-      );
+  public addPatient(Patient: PatientModel): Observable<PatientModel> {
+    return this.http
+      .post<PatientModel>(patientUrl, Patient, httpOptions)
+      .pipe(catchError(this.handleError('addPatient', Patient)));
   }
 
-  public updatePatient (Patient: PatientModel): Observable<PatientModel> {
-    return this.http.put<PatientModel>(patientUrl+Patient.id, Patient, httpOptions)
-      .pipe(
-        catchError(this.handleError('updatePatient', Patient))
-      );
+  public updatePatient(Patient: PatientModel): Observable<PatientModel> {
+    return this.http
+      .put<PatientModel>(patientUrl + Patient.id, Patient, httpOptions)
+      .pipe(catchError(this.handleError('updatePatient', Patient)));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.error(error); 
+      console.error(error);
       console.log(`${operation} failed: ${error.message}`);
       return of(result as T);
     };
